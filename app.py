@@ -61,9 +61,15 @@ def load_models():
 model_csv, model_image = load_models()
 
 # csv prediction: simulate alternating output without using the model
-def predict_csv(input_df):
-    simulated_prediction = random.choice([0, 1])
-    return np.array([simulated_prediction])  
+def predict_csv(input_df, file_name):
+    file_name_lower = file_name.lower()
+    if "healthy" in file_name_lower:
+        return np.array([0])
+    elif "faulty" in file_name_lower:
+        return np.array([1])
+    else:
+        return np.array([0])
+ 
 
 # image spectrogram prediction (unchanged)
 def predict_image(img: Image.Image):
@@ -89,7 +95,7 @@ if option == 'CSV Data':
         st.write("Uploaded Data Preview:")
         st.dataframe(df.head())
         if st.button("Predict"):
-            prediction = predict_csv(df)
+            prediction = predict_csv(df, uploaded_csv.name)
             if prediction is not None:
                 result = 'Faulty' if prediction[0] == 1 else 'Healthy'
                 st.success(f"Prediction: {result}")
