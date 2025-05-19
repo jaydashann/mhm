@@ -22,7 +22,8 @@ model_2 = "custom_dcnn_model.h5"
 url_scaler = "https://drive.google.com/uc?id=1VS_8Se0KRqanfxYxTgLFi4fcv_lCEfjQ"
 scaler_file = "scaler.pkl"
 # gdown.download(url_scaler, scaler_file, quiet=False)
-scaler = scaler_file
+with open(scaler_file, 'rb') as f:
+    scaler = joblib.load(f)
 
 # csv preprocessing
 def preprocess_csv(df, downsample_factor=5):
