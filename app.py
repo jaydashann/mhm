@@ -26,7 +26,7 @@ with open(scaler_file, 'rb') as f:
     scaler = joblib.load(f)
 
 # csv preprocessing
-def preprocess_csv(df, downsample_factor=5):
+def preprocess_csv(df, downsample_factor=5, target_features=20000):
     if df.shape[1] != 8:
         st.error("CSV must have exactly 8 columns.")
         return None
@@ -36,12 +36,18 @@ def preprocess_csv(df, downsample_factor=5):
     freq_features = np.abs(Zxx).mean(axis=2).flatten()
 
     combined = np.hstack([time_series.flatten(), freq_features])
+
+    # Truncate or pad to 20,000
+    if combined.shape[0] > target_features:
+        combined = combined[:target_features]
+    else:
+        padding = target_features - combined.shape[0]
+        combined = np.pad(combined, (0, padding), mode='constant')
+
     combined = combined.reshape(1, -1)
-
-    # Debugging
-    st.write(f"Combined shape: {combined.shape}")  # Should print (1, 400264)
-
     combined_scaled = scaler.transform(combined)
+
+    st.write(f"Combined shape: {combined.shape}")
     return combined_scaled
 
 # loading models
