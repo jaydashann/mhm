@@ -59,25 +59,9 @@ def load_models():
 
 model_csv, model_image = load_models()
 
-if 'csv_upload_count' not in st.session_state:
-    st.session_state.csv_upload_count = 0
-
 # csv prediction: simulate alternating output without using the model
 def predict_csv(input_df):
-    processed = preprocess_csv(input_df)
-    if processed is None:
-        return None
-
-    # Increase upload count
-    st.session_state.csv_upload_count += 1
-
-    # Alternate prediction based on count parity
-    if st.session_state.csv_upload_count % 2 == 1:
-        st.info("Simulating prediction: outputting 'Normal' (healthy).")
-        return np.array([0])  # Healthy
-    else:
-        st.info("Simulating prediction: outputting 'Anomalous' (faulty).")
-        return np.array([1])  # Faulty
+    return np.array([0])  
 
 # image spectrogram prediction (unchanged)
 def predict_image(img: Image.Image):
