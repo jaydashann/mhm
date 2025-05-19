@@ -59,20 +59,17 @@ def load_models():
 
 model_csv, model_image = load_models()
 
-# csv 
+# csv prediction: simulate output without using the model
 def predict_csv(input_df):
     processed = preprocess_csv(input_df)
     if processed is None:
         return None
 
-    reconstruction = model_csv.predict(processed)
-    mse = np.mean(np.square(processed - reconstruction), axis=1)
+    # Instead of model prediction, simulate "Normal" (healthy) result:
+    st.info("Simulating prediction: outputting 'Normal' without model inference.")
+    return np.array([0])  # 0 = Normal
 
-    threshold = 0.045960635265101094
-    return (mse > threshold).astype(int)
-
-
-# image spectrogram
+# image spectrogram prediction (unchanged)
 def predict_image(img: Image.Image):
     img = img.convert('RGB')
     img = img.resize((224, 224)) 
