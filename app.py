@@ -53,6 +53,7 @@ def preprocess_csv(df, downsample_factor=5, target_features=20000):
 
     return combined_scaled
 
+st.write(f"Scaler expects: {scaler.n_features_in_} features")
 
 # loading models
 @st.cache_resource
