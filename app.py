@@ -67,7 +67,7 @@ def predict_csv(input_df):
 
     # Instead of model prediction, simulate "Normal" (healthy) result:
     st.info("Simulating prediction: outputting 'Normal' without model inference.")
-    return np.array([0])  # 0 = Normal
+    return np.array([0])  
 
 # image spectrogram prediction (unchanged)
 def predict_image(img: Image.Image):
