@@ -8,6 +8,7 @@ import os
 import io
 from scipy.signal import stft
 import joblib
+import random
 
 # models
 url_1 = "https://drive.google.com/uc?id=1RjO6e_fI8NUT6F3zPs12qHYLOxqXIVOe"
@@ -61,7 +62,8 @@ model_csv, model_image = load_models()
 
 # csv prediction: simulate alternating output without using the model
 def predict_csv(input_df):
-    return np.array([0])  
+    simulated_prediction = random.choice([0, 1])
+    return np.array([simulated_prediction])  
 
 # image spectrogram prediction (unchanged)
 def predict_image(img: Image.Image):
